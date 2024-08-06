@@ -7,14 +7,10 @@ document.getElementById('searchForm').addEventListener('submit', async function(
         alert('Please enter a keyword.');
         return;
     }
-
-    // Show loading indicator
     document.getElementById('loading').style.display = 'block';
     document.getElementById('results').style.display = 'none';
     document.getElementById('saveBtn').style.display = 'none';
-
-    // Determine the base URL
-    const baseUrl = window.location.origin; // This will work for both localhost and Heroku
+    const baseUrl = window.location.origin; 
 
     try {
         const response = await fetch(`${baseUrl}/search`, {
