@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const puppeteer = require('puppeteer');
+const cors = require('cors'); // Import CORS package
 const path = require('path');
 
 const app = express();
@@ -8,6 +9,7 @@ const PORT = process.env.PORT || 3000;
 
 // Middleware to parse JSON bodies
 app.use(bodyParser.json());
+app.use(cors()); // Use CORS middleware
 app.use(express.static('public'));
 
 app.post('/search', async (req, res) => {
@@ -21,16 +23,9 @@ app.post('/search', async (req, res) => {
     }
 
     try {
-        // // Launch Puppeteer with appropriate arguments
-        // const browser = await puppeteer.launch({
-        //     headless: true, // Run in headless mode
-        //     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'], // Necessary flags for Heroku and some environments
-        //     executablePath: process.env.CHROME_BIN || (process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : '/usr/bin/google-chrome'),
-        // });
         const browser = await puppeteer.launch({
             headless: true,
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
-            executablePath: process.env.CHROME_BIN || (process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : '/usr/bin/chromium-browser'),
         });
 
         const page = await browser.newPage();
