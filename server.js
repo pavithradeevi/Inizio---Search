@@ -3,10 +3,10 @@ const bodyParser = require('body-parser');
 const puppeteer = require('puppeteer');
 
 const app = express();
-const PORT = process.env.PORT || 3000; // Use the PORT from environment variables or 3000
+const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-app.use(express.static('public')); 
+app.use(express.static('public'));
 
 app.post('/search', async (req, res) => {
     const { keyword } = req.body;
@@ -46,5 +46,5 @@ app.post('/search', async (req, res) => {
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    console.log(`Server is running on port ${PORT}`);
 });
