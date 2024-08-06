@@ -3,8 +3,7 @@ const bodyParser = require('body-parser');
 const puppeteer = require('puppeteer');
 
 const app = express();
-const PORT = process.env.PORT || 3000; 
-
+const PORT = process.env.PORT || 3000; // Use the PORT from environment variables or 3000
 
 app.use(bodyParser.json());
 app.use(express.static('public')); 
@@ -17,7 +16,12 @@ app.post('/search', async (req, res) => {
     }
 
     try {
-        const browser = await puppeteer.launch({ headless: true });
+        // Launch Puppeteer with the appropriate settings for Heroku
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox'], // Add necessary args for Heroku
+        });
+        
         const page = await browser.newPage();
         await page.goto(`https://www.google.com/search?q=${encodeURIComponent(keyword)}`);
 
@@ -40,6 +44,7 @@ app.post('/search', async (req, res) => {
     }
 });
 
+// Start the server
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
