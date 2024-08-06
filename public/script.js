@@ -13,8 +13,11 @@ document.getElementById('searchForm').addEventListener('submit', async function(
     document.getElementById('results').style.display = 'none';
     document.getElementById('saveBtn').style.display = 'none';
 
+    // Determine the base URL
+    const baseUrl = window.location.origin; // This will work for both localhost and Heroku
+
     try {
-        const response = await fetch('/search', {
+        const response = await fetch(`${baseUrl}/search`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
