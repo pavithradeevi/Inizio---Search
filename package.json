@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js",
+     "start": "node server.js",
     "postinstall": "npx puppeteer install"
   },
   "keywords": [],
@@ -12,7 +12,6 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "chrome-aws-lambda": "^10.1.0",
     "express": "^4.19.2",
     "puppeteer": "^22.15.0"
   },

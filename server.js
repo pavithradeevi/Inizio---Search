@@ -1,7 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const puppeteer = require('puppeteer-core'); // Use puppeteer-core instead
-const chrome = require('chrome-aws-lambda'); // Import chrome-aws-lambda
+const puppeteer = require('puppeteer');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -17,18 +16,12 @@ app.post('/search', async (req, res) => {
     }
 
     try {
-        // Launch Puppeteer with the appropriate settings for Heroku
+        // Launch Puppeteer with appropriate arguments for Heroku
         const browser = await puppeteer.launch({
-            headless: true,
-            args: [
-                ...chrome.args, // Use arguments from chrome-aws-lambda
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                '--disable-dev-shm-usage', // Prevents issues on Heroku
-            ],
-            executablePath: await chrome.executablePath, // Use chrome-aws-lambda executable path
+            headless: true, // Set to false for debugging
+            args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
-        
+
         const page = await browser.newPage();
         await page.goto(`https://www.google.com/search?q=${encodeURIComponent(keyword)}`, { waitUntil: 'networkidle2' });
 
@@ -46,8 +39,8 @@ app.post('/search', async (req, res) => {
         await browser.close();
         res.json(results);
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error fetching search results' });
+        console.error('Error in /search:', error); // Log detailed error information
+        res.status(500).json({ error: 'Error fetching search results', details: error.message });
     }
 });
 
