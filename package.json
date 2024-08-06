@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "start": "node server.js",
-  "postinstall": "npm install puppeteer && npx puppeteer install"
-},
+    "start": "node server.js",
+    "postinstall": "npx puppeteer install"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -14,7 +14,9 @@
     "body-parser": "^1.20.2",
     "chrome-aws-lambda": "^10.1.0",
     "express": "^4.19.2",
-    "puppeteer": "^22.15.0",
-    "puppeteer-core": "^10.4.0"
+    "puppeteer": "^22.15.0"
+  },
+  "engines": {
+    "node": "18.x"
   }
 }
