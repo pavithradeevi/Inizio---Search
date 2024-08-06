@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Search Scraper</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            background: url('https://st.depositphotos.com/1970689/3173/i/450/depositphotos_31734215-stock-photo-blank-whiteboard.jpg') no-repeat center center fixed;
+            background-size: cover;
+            /* height: 100vh; */
+            background-repeat: no-repeat;
+        }
+        #formContainer {
+            text-align: center;
+        }
+        #results {
+            margin-top: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
+        .result {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .result a {
+            text-decoration: none;
+            color: #1a0dab;
+            font-size: 18px;
+        }
+        .result a:hover {
+            text-decoration: underline;
+        }
+        .result .link {
+            font-size: 14px;
+            color: #006621;
+            margin-top: 5px;
+        }
+        #loading {
+            display: none;
+            margin-top: 20px;
+        }
+        .spinner {
+            border: 8px solid #f3f3f3;
+            border-top: 8px solid #3498db;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        input[type="text"] {
+            width: 260px; 
+            padding: 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        .flex-form {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+        .button {
+            margin-left: 25px;
+        }
+        button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.2s;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #3498db;
+            color: white;
+        }
+        button:active {
+            transform: scale(0.95);
+            background-color: #2980b9;
+            color: white;
+        }
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+        }
+        #saveBtn {
+            background-color: #f39c12;
+            color: white;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="formContainer">
+        <h1>INIZIO Internet Media</h1>
+        <form id="searchForm" class="flex-form">
+            <input type="text" id="keyword" placeholder="Enter keyword" required>
+            <button type="submit" class="button">Search</button>
+            <button id="saveBtn" class="button">Save</button>
+        </form>
+        
+        <div id="loading">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <div id="results"></div>
+    
+    <script src="./script.js"></script>
+
+</body>
+</html>
