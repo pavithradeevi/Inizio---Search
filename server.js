@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core'); // Use puppeteer-core for Heroku
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +18,7 @@ app.post('/search', async (req, res) => {
     try {
         // Launch Puppeteer with appropriate arguments for Heroku
         const browser = await puppeteer.launch({
+            executablePath: process.env.CHROME_BIN, // Use the environment variable
             headless: true, // Set to false for debugging
             args: ['--no-sandbox', '--disable-setuid-sandbox'],
         });
