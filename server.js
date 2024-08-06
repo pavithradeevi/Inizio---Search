@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-core'); // Use puppeteer-core instead
+const chrome = require('chrome-aws-lambda'); // Import chrome-aws-lambda
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,11 +20,17 @@ app.post('/search', async (req, res) => {
         // Launch Puppeteer with the appropriate settings for Heroku
         const browser = await puppeteer.launch({
             headless: true,
-            args: ['--no-sandbox', '--disable-setuid-sandbox'], // Add necessary args for Heroku
+            args: [
+                ...chrome.args, // Use arguments from chrome-aws-lambda
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage', // Prevents issues on Heroku
+            ],
+            executablePath: await chrome.executablePath, // Use chrome-aws-lambda executable path
         });
         
         const page = await browser.newPage();
-        await page.goto(`https://www.google.com/search?q=${encodeURIComponent(keyword)}`);
+        await page.goto(`https://www.google.com/search?q=${encodeURIComponent(keyword)}`, { waitUntil: 'networkidle2' });
 
         const results = await page.evaluate(() => {
             const items = Array.from(document.querySelectorAll('div.g'));
