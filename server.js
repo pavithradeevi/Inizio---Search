@@ -21,11 +21,16 @@ app.post('/search', async (req, res) => {
     }
 
     try {
-        // Launch Puppeteer with appropriate arguments
+        // // Launch Puppeteer with appropriate arguments
+        // const browser = await puppeteer.launch({
+        //     headless: true, // Run in headless mode
+        //     args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'], // Necessary flags for Heroku and some environments
+        //     executablePath: process.env.CHROME_BIN || (process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : '/usr/bin/google-chrome'),
+        // });
         const browser = await puppeteer.launch({
-            headless: true, // Run in headless mode
-            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'], // Necessary flags for Heroku and some environments
-            executablePath: process.env.CHROME_BIN || (process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : '/usr/bin/google-chrome'),
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
+            executablePath: process.env.CHROME_BIN || (process.platform === 'win32' ? 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe' : '/usr/bin/chromium-browser'),
         });
 
         const page = await browser.newPage();
