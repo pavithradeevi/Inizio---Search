@@ -21,7 +21,7 @@ app.post('/search', async (req, res) => {
     try {
         const browser = await puppeteer.launch({
             headless: true,
-            executablePath: process.env.NODE_ENV === 'production' ? '/usr/bin/google-chrome-stable' : undefined, // Use Chrome path in production only
+            executablePath: process.env.NODE_ENV === 'production' ? '/usr/bin/google-chrome-stable' : undefined,
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
         });
 
