@@ -17,14 +17,17 @@ app.post('/search', async (req, res) => {
     if (!keyword) {
         return res.status(400).json({ error: 'Keyword is required' });
     }
+    
     try {
         const browser = await puppeteer.launch({
             headless: true,
+            executablePath: process.env.NODE_ENV === 'production' ? '/usr/bin/google-chrome-stable' : undefined, // Use Chrome path in production only
             args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
         });
 
         const page = await browser.newPage();
         await page.goto(`https://www.google.com/search?q=${encodeURIComponent(keyword)}`, { waitUntil: 'networkidle2' });
+        
         const results = await page.evaluate(() => {
             const items = Array.from(document.querySelectorAll('div.g'));
             return items.map(item => {
@@ -43,7 +46,6 @@ app.post('/search', async (req, res) => {
         res.status(500).json({ error: 'Error fetching search results', details: error.message });
     }
 });
-
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
