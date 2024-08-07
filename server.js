@@ -5,7 +5,7 @@ const cors = require('cors');
 const path = require('path');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000; // Ensure you are using the correct port
 
 app.use(bodyParser.json());
 app.use(cors()); 
@@ -21,9 +21,15 @@ app.post('/search', async (req, res) => {
     try {
         const browser = await puppeteer.launch({
             headless: true,
-            executablePath: process.env.NODE_ENV === 'production' ? '/usr/bin/google-chrome-stable' : undefined,
-            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu'],
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-gpu',
+                '--disable-dev-shm-usage', 
+                '--single-process', 
+            ],
         });
+        
 
         const page = await browser.newPage();
         await page.goto(`https://www.google.com/search?q=${encodeURIComponent(keyword)}`, { waitUntil: 'networkidle2' });
